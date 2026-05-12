@@ -33,6 +33,26 @@ docker compose up --build
 
 App: [http://localhost:8080](http://localhost:8080) (change the host port in `docker-compose.yml` if needed).
 
+### Prebuilt image (GitHub Container Registry)
+
+On each push to `main`, CI publishes an image to GHCR:
+
+```bash
+docker pull ghcr.io/<GITHUB_OWNER>/<GITHUB_REPO>:latest
+docker run --rm -p 8080:80 ghcr.io/<GITHUB_OWNER>/<GITHUB_REPO>:latest
+```
+
+Replace `<GITHUB_OWNER>` and `<GITHUB_REPO>` with your GitHub user or org and repository name (use lowercase in the image URL). If the package is private, run `docker login ghcr.io` first.
+
+## GitHub Pages
+
+CI deploys the static build to **GitHub Pages** on every push to `main`.
+
+1. In the repo, open **Settings → Pages** and set **Build and deployment** source to **GitHub Actions** (not “Deploy from a branch”).
+2. After the first successful workflow run, open `https://<GITHUB_USER>.github.io/<GITHUB_REPO>/`.
+
+The workflow sets `VITE_BASE_URL` so asset paths work under the `/repo-name/` project path.
+
 ## Crop logic
 
 The 16:10 strip height is `round(width × 10 / 16)` pixels. The crop is the **top** of the image at native width. See `src/lib/cropTop16By10.ts`.
