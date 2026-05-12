@@ -1,21 +1,38 @@
-# React + TypeScript + Vite + shadcn/ui
+# image-resizer
 
-This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
+Small web app that takes a **tall screenshot** (or any image), keeps the **full width**, and crops from the **top** to **16:10**. You get a **PNG** preview and download. Everything runs in the browser; images are not uploaded to a server.
 
-## Adding components
+## Features
 
-To add components to your app, run the following command:
+- Drag-and-drop, file picker, or **paste** (Ctrl+V / ⌘V) when you are not focused in a text field
+- One image at a time, up to **80MB** (handy for full-page captures)
+- Clear error if the image is too short to form 16:10 at full width
+
+## Stack
+
+[Vite](https://vitejs.dev/) · [React](https://react.dev/) 19 · TypeScript · [Tailwind CSS](https://tailwindcss.com/) v4 · UI built with shadcn-style primitives ([shadcn/ui](https://ui.shadcn.com/) patterns, [Base UI](https://base-ui.com/) / Radix-style composition)
+
+## Development
+
+Requires [Bun](https://bun.sh/).
 
 ```bash
-npx shadcn@latest add button
+bun install
+bun run dev
 ```
 
-This will place the ui components in the `src/components` directory.
+Other scripts: `bun run build`, `bun run preview`, `bun run lint`, `bun run typecheck`.
 
-## Using components
+## Docker
 
-To use the components in your app, import them as follows:
+Production build is served with nginx (multi-stage image: install → build → static).
 
-```tsx
-import { Button } from "@/components/ui/button"
+```bash
+docker compose up --build
 ```
+
+App: [http://localhost:8080](http://localhost:8080) (change the host port in `docker-compose.yml` if needed).
+
+## Crop logic
+
+The 16:10 strip height is `round(width × 10 / 16)` pixels. The crop is the **top** of the image at native width. See `src/lib/cropTop16By10.ts`.
