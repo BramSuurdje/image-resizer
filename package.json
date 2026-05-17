@@ -8,6 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "raycast:dev": "cd raycast && bun run dev",
+    "raycast:build": "cd raycast && bun run build",
+    "raycast:lint": "cd raycast && bun run lint",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview"
   },

@@ -23,6 +23,26 @@ bun run dev
 
 Other scripts: `bun run build`, `bun run preview`, `bun run lint`, `bun run typecheck`.
 
+## Raycast extension
+
+This repo also includes a local Raycast extension in `raycast/`.
+
+```bash
+cd raycast
+bun install
+bun run dev
+```
+
+Raycast opens the extension in developer mode. In Finder, select one image file, open Raycast, and run **Crop Top 16:10**. The command saves `<original-name>-top-16x10.png` in the same folder as the selected file.
+
+From the repo root you can also run:
+
+```bash
+bun run raycast:dev
+bun run raycast:build
+bun run raycast:lint
+```
+
 ## Docker
 
 Production build is served with nginx (multi-stage image: install → build → static).
